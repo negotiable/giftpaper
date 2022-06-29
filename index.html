@@ -1,13 +1,47 @@
 <html>
 <head>
+<link rel="stylesheet" href="css/style.css">
 <title>gift paper</title>
 <style>
-  body {
+  iframe {
   pointer-events: none;
 }
 </style>
 </head>
 <body>
-<iframe src="https://feed.mikle.com/widget/v2/154675/" height="100%" width="100%" class="fw-iframe" scrolling="no" frameborder="0"></iframe>
+<div class="row">
+    <div class="column">
+      <iframe src="https://feed.mikle.com/widget/v2/154675/" height="100%" width="100%" scrolling="no" frameborder="0"></iframe>
+    </div>
+    <div class="column">
+      <ul id="myUL">
+        <li><span class="box">Ever</span>
+          <ul class="nested">
+            <li><a href="t.me/packet9">t.me/packet9 </a></li>
+            <li><a href="mailto:bottle@giftpaper.pictures">Bottle S. </a></li>
+            <li><span class="box">Too</span>
+              <ul class="nested">
+                <li><a href="https://paid.exchange">paid.exchange </a></li>
+                <li><a href="https://device.gmbh">device.gmbh </a></li>
+              </ul>
+            </li>  
+          </ul>
+        </li>
+      </ul>      
+    </div>
+</div>
+
+<script>
+var toggler = document.getElementsByClassName("box");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("check-box");
+  });
+}
+</script>
 </body>
 </html>
+
