@@ -13,12 +13,20 @@
     clear: both;
 }
   
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 600px) {
     .column {
       width: 100%;
     }
 }
 
+iframe {
+    pointer-events: none;
+      aspect-ratio: 4 / 6;
+      height: auto;
+      width: 100%;
+  }
+
+/*
 a:link{
     text-decoration: none;
 }
@@ -42,9 +50,9 @@ ul, #myUL {
   
   .box {
     cursor: pointer;
-    -webkit-user-select: none; /* Safari 3.1+ */
-    -moz-user-select: none; /* Firefox 2+ */
-    -ms-user-select: none; /* IE 10+ */
+    -webkit-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
     user-select: none;
   }
   
@@ -67,3 +75,4 @@ ul, #myUL {
   .active {
     display: block;
   }
+*/
