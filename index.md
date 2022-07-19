@@ -3,7 +3,7 @@ permalink: /
 layout: default
 ---
 
-<script type="text/javascript" src="https://feed.mikle.com/js/fw-loader.js" preloader-text="Birds%20can%20do%20more%20than%20fly" data-fw-param="154675/"></script>
+<script type="text/javascript" src="https://feed.mikle.com/js/fw-loader.js" data-fw-param="154675/"></script>
 
 <https://t.me/packet9>  
 <bottle@giftpaper.pictures>  
