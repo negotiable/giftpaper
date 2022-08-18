@@ -7,11 +7,11 @@ layout: default
 <script type="text/javascript" src="https://feed.mikle.com/js/fw-loader.js" data-fw-param="154675/"></script>
 </div>
 
-<bottle@giftpaper.pictures>
-<https://t.me/packet9>
+<bottle@giftpaper.pictures>  
+<https://t.me/packet9>  
 
-<https://paid.exchange>
-<https://device.gmbh>
+<https://paid.exchange>  
+<https://device.gmbh>  
 
-Sean Lockwood YouTube
-[Loadout] (https://loadout.giftpaper.pictures)
+[Videos](https://www.youtube.com/results?search_query=sean+lockwood)  
+[Loadout](https://loadout.giftpaper.pictures)  
