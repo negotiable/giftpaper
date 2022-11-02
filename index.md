@@ -8,12 +8,9 @@ layout: default
 </div>
 
 <bottle@giftpaper.pictures>  
-<https://t.me/packet9>  
 
 <https://paid.exchange>  
 <https://device.gmbh>  
 
 <https://monkeytype.com/profile/nonsence>  
 
-[Videos](https://www.youtube.com/results?search_query=sean+lockwood)  
-[Loadout](https://loadout.giftpaper.pictures)  
