@@ -46,6 +46,10 @@
     font-family: sans-serif;
   }
 
+  img {
+    padding: 10px;
+  }
+
   .responsive {
     width: 100%;
     max-width: 400px;
