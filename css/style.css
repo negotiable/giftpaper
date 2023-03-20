@@ -10,7 +10,7 @@
   
   .column.b {
     float: left;
-    width: 33.33%;
+    width: 66.66%;
     padding: 20px;
   }
 
@@ -51,8 +51,9 @@
   }
 
   .responsive {
-    width: 100%;
-    max-width: 400px;
+    width: auto;
     height: auto;
+    max-height: 300;
+    max-width: 500px;
   }
   
