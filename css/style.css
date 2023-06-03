@@ -10,14 +10,10 @@
   
   .column.b {
     float: left;
-    width: 33.33%;
+    width: 66.66%;
+    height: 100%;
     padding: 20px;
-  }
-
-  .column.c {
-    float: left;
-    width: 33.33%;
-    padding: 20px;
+    overflow: auto;
   }
 
   .row:after {
