@@ -12,7 +12,7 @@
     float: left;
     width: 66.66%;
     height: 100%;
-    padding: 20px;
+    padding: 0px;
     overflow: auto;
   }
 
@@ -42,8 +42,12 @@
     font-family: sans-serif;
   }
 
+  .p.b {
+    padding: 0px;
+  }
+
   img {
-    padding: 10px;
+    padding: 0px;
   }
 
   .responsive {
