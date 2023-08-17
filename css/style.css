@@ -38,7 +38,7 @@
     border-top: 1px gray;
   }
 
-  h4, p {
+  h4, p, input, button {
     font-family: sans-serif;
   }
 
@@ -55,5 +55,9 @@
     height: auto;
     max-height: 300;
     max-width: 500px;
+  }
+
+  script {
+    pointer-events: none;
   }
   
