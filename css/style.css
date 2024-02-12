@@ -4,13 +4,13 @@
   
   .column.a {
     float: left;
-    width: 33.33%;
+    width: 65%;
     padding: 20px;
   }
   
   .column.b {
     float: left;
-    width: 66.66%;
+    width: 35%;
     height: auto;
     padding: 10px;
     overflow: auto;
