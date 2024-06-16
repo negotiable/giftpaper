@@ -4,8 +4,9 @@
   
   .column.a {
     float: left;
-    width: 65%;
-    padding: 20px;
+    width: 25%;
+    padding: 10px;
+    overflow: auto;
   }
   
   .column.b {
@@ -34,17 +35,10 @@
     }
   }
   
-  hr.gray {
+  hr {
     border-top: 1px gray;
   }
 
-  h4, p, input, button {
-    font-family: sans-serif;
-  }
-
-  .p.b {
-    padding: 0px;
-  }
 
   img {
     padding: 0px;
@@ -60,4 +54,10 @@
   script {
     pointer-events: none;
   }
+
+  p {
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+
   
