@@ -4,16 +4,29 @@
   
   .column.a {
     float: left;
-    width: 25%;
-    padding: 10px;
+    width: 150px;
+    padding-left: 5px;
     overflow: auto;
   }
   
   .column.b {
     float: left;
+    width: 10%;
+    padding-left: 5px;
+    overflow: auto;
+  }
+
+  .column.c {
+    float: left;
     width: 35%;
-    height: auto;
-    padding: 10px;
+    padding-left: 5px;
+    overflow: auto;
+  }
+
+  .column.d {
+    float: left;
+    width: 15%;
+    padding-left: 5px;
     overflow: auto;
   }
 
@@ -33,12 +46,18 @@
     .column.c {
       width: 100%;
     }
+    .column.d {
+      width: 100%;
+    }
   }
   
   hr {
     border-top: 1px gray;
   }
 
+  p {
+    font-family: 'Courier New', Courier, monospace;
+  }
 
   img {
     padding: 0px;
@@ -55,9 +74,7 @@
     pointer-events: none;
   }
 
-  p {
-    font-family: 'Courier New', Courier, monospace;
-  }
+
 
 
   
