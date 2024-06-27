@@ -19,14 +19,14 @@
   .column.c {
     float: left;
     width: 35%;
-    padding-left: 5px;
+    padding-left: 15px;
     overflow: auto;
   }
 
   .column.d {
     float: left;
     width: 15%;
-    padding-left: 5px;
+    padding-left: 20px;
     overflow: auto;
   }
 
