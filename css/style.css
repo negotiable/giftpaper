@@ -2,6 +2,38 @@
     box-sizing: border-box;
   }
   
+  .container.a {
+    float: left;
+    padding: 0px;
+    overflow: auto;
+    background-color: #e5ebef;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e5ebef;
+    border-radius: 5px;
+    width: 100%;
+  }
+
+  .container.b {
+    float: left;
+    padding: 0px;
+    overflow: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-color: red;
+    width: 100%;
+  }
+
+  .container.c {
+    float: left;
+    width: 100%;
+    padding: 0px;
+    overflow: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+  }
+
   .column.a {
     float: left;
     width: 20%;
@@ -12,6 +44,8 @@
     border-width: 1px;
     border-color: #B3A28E;
     border-radius: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
   }
   
   .column.b {
@@ -19,12 +53,14 @@
     width: 20%;
     padding: 10px;
     overflow: auto;
+    margin-left: 20px;
+    margin-right: 20px;
   }
 
   .column.c {
     float: left;
-    width: 35%;
-    padding-left: 15px;
+    width: 20%;
+    padding: 10px;
     overflow: auto;
   }
 
@@ -44,20 +80,30 @@
   @media screen and (max-width: 900px) {
     .column.a {
       width: 100%;
+      margin: 0px;
     }
     .column.b {
       width: 100%;
+      margin: 0px;
     }
     .column.c {
       width: 100%;
+      margin: 0px;
     }
     .column.d {
+      width: 100%;
+    }
+    .column.e {
       width: 100%;
     }
   }
   
   hr.different {
     border-top: 1px solid #B3A28E;
+  }
+
+  hr.same {
+    border-top: 1px solid black;
   }
 
   p {
@@ -92,46 +138,6 @@ h1 {
     padding: 20px;
   }
 
-  .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-
-  input, button, textarea {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  details {
-    user-select: none;
-  }
-  
-  details>summary span.icon {
-    width: 24px;
-    height: 24px;
-    transition: all 0.3s;
-    margin-left: auto;
-  }
-  
-  details[open] summary span.icon {
-    transform: rotate(180deg);
-  }
-  
-  summary {
-    display: flex;
-    cursor: pointer;
-    font-family: sans-serif;
-    font-size: 10pt;
-    color: green;
-    padding-left: 20px;
-    padding-right: 20px;
-    text-decoration: underline;
-  }
-  
-  summary::-webkit-details-marker {
-    display: none;
-  }
 
   .responsive {
     width: auto;
