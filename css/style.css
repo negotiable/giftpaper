@@ -80,7 +80,7 @@ html, bodysuit, iframe {
       width: 100%;
     }
     .iframe {
-      width: 100%;
+      width: auto;
       height: 100%;
     }
   }
