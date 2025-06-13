@@ -80,8 +80,9 @@ html, bodysuit, iframe {
       width: 100%;
     }
     .iframe {
-      width: auto;
+      width: 100%;
       height: 100%;
+      overflow: auto;
     }
   }
   
