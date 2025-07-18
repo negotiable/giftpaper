@@ -1,39 +1,38 @@
-html, bodysuit, iframe {
-  height: auto;
-  width: 100%;
-} 
-
 * {
     box-sizing: border-box;
   }
   
+  body {
+    background-color: lightgray;
+  }
   .container {
     display: flex;
     align-items: center;
     justify-content: left;
   }
 
+  .row {
+    padding: 0px;
+  }
+
   .column.a {
     float: left;
-    width: 20%;
+    width: 25%;
+    height: 100%;
     padding: 0px;
     overflow: auto;
-    background-color: #FFEAD2;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #B3A28E;
-    border-radius: 5px;
-    margin-left: 20px;
-    margin-right: 20px;
+    background-color: lightgray;
   }
   
   .column.b {
     float: left;
-    position: fixed;
-    width: 20%;
+    position: relative;
+    width: 25%;
+    height: 100%;
     padding-left: 20px;
     padding-right: 20px;
     overflow: auto;
+    background-color: white;
   }
 
   .column.c {
@@ -62,12 +61,11 @@ html, bodysuit, iframe {
   @media screen and (max-width: 900px) {
     .column.a {
       width: 100%;
-      margin: 0px;
+      height: auto;
     }
     .column.b {
       width: 100%;
-      margin: 0px;
-      position:relative;
+      height: auto;
     }
     .column.c {
       width: 100%;
@@ -96,28 +94,18 @@ html, bodysuit, iframe {
   }
 
   p, h3 {
-    font-family: sans-serif;
+    font-size: 14pt;
     padding-left: 10px;
     padding-right: 10px;
   }
 
-  button, summary {
-    font-family: sans-serif;
-  }
-
-  input {
-    font-family: sans-serif;
-    width: 90%;
-  }
-
   a {
-    font-family: sans-serif;
-    color: #2c7395;
+    color: black;
   }
 
   details {
-    font-family: sans-serif;
-    color: #2c7395;
+    font-size: 14pt;
+    color: Black;
     text-decoration: underline;
     padding-left: 10px;
     padding-right: 10px;
@@ -130,6 +118,17 @@ html, bodysuit, iframe {
 
   details > summary::-webkit-details-marker {
     display: none;
+  }
+
+  button, summary {
+    font-size: 14pt;
+    font-family: serif;
+  }
+
+  input {
+    font-family: serif;
+    font-size: 14pt;
+    width: 90%;
   }
 
 h1 {
