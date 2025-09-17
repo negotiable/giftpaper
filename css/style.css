@@ -2,9 +2,6 @@
     box-sizing: border-box;
   }
   
-  body {
-    background-color: lightgray;
-  }
   .container {
     display: flex;
     align-items: center;
@@ -93,22 +90,9 @@
     border-top: 1px solid black;
   }
 
-  p, h3 {
-    font-size: 14pt;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  a {
-    color: black;
-  }
-
   details {
-    font-size: 14pt;
-    color: Black;
     text-decoration: underline;
-    padding-left: 10px;
-    padding-right: 10px;
+    color:blue;
     cursor:pointer;
   }
 
@@ -120,29 +104,6 @@
     display: none;
   }
 
-  button, summary {
-    font-size: 14pt;
-    font-family: serif;
-  }
-
-  input {
-    font-family: serif;
-    font-size: 14pt;
-    width: 90%;
-  }
-
-h1 {
-  font-family: sans-serif;
-  font-size: 18pt;
-  color: #FFEAD2;
-}
-
-  h2 {
-    font-family: sans-serif;
-    color: #2c7395;
-    font-size: 16pt;
-    padding-bottom: 0px;
-  }
 
   img.b {
     border-radius: 50%;
