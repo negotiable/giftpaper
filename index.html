@@ -1,21 +1,124 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/style.css">
-<title>Sean Lockwood</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sean Lockwood</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: sans-serif;
+            line-height: 1.5;
+            color: #000;
+            background-color: #fff;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .name {
+            font-size: 24px;
+            font-weight: normal;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #aaa;
+        }
+        
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .link {
+            color: #0645ad;
+            text-decoration: none;
+            padding: 5px 0;
+            display: block;
+            width: fit-content;
+        }
+        
+        .link:hover {
+            text-decoration: underline;
+        }
+        
+        .contact-form {
+            padding: 20px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+            max-width: 400px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #a7a7a7;
+            font-size: 14px;
+        }
+        
+        button {
+            background-color: #f5f5f5;
+            border: 1px solid #a7a7a7;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 10px;
+            border-top: 1px solid #aaa;
+            font-size: 12px;
+            color: #555;
+        }
+    </style>
 </head>
-<body><p>Sean Lockwood</p>
-    <p><a href="https://youhavetoalways.giftpaper.pictures">News</a></p>
-            <details>
-                <summary>Contact</summary><br>
-                <form action="https://formsubmit.co/34a8e7831d7afea2016486e1f3f47ce5" method="POST">
-                    <input type="text" name="name" placeholder="Name" required><br><br>
-                    <input type="email" name="email" placeholder="Email Address" required><br><br>
-                    <input type="text" name="company" placeholder="Company/Memo" required><br><br>
-                    <button type="submit">Send</button>
-                    <input type="hidden" name="_captcha" value="true">
-                    <input type="hidden" name="_next" value="https://giftpaper.pictures/sent.html">
-                    </form></p>
-            </details>
-     </body>
+<body>
+    <div class="name">Sean Lockwood</div>
+    
+    <div class="links">
+        <a href="https://youhavetoalways.giftpaper.pictures" class="link">News</a>
+        <a href="#" id="contact-link" class="link">Contact</a>
+    </div>
+    
+    <div class="contact-form" id="contact-form" style="display: none;">
+        <form action="https://formsubmit.co/34a8e7831d7afea2016486e1f3f47ce5" method="POST">
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Name" required>
+            </div>
+            
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Email Address" required>
+            </div>
+            
+            <div class="form-group">
+                <input type="text" name="company" placeholder="Company/Memo" required>
+            </div>
+            
+            <button type="submit">Send</button>
+            
+            <input type="hidden" name="_captcha" value="true">
+            <input type="hidden" name="_next" value="https://giftpaper.pictures/sent.html">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('contact-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = document.getElementById('contact-form');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        });
+    </script>
+</body>
 </html>
