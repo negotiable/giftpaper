@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hours</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+            background: white;
+            color: black;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 20px 10px;
+        }
+
+        .container {
+            margin: 0 auto;
+        }
+
+        h1, p {
+            font-size: 14px;
+            font-weight: normal;
+            padding-bottom: 40px;
+            padding-left: 10px;
+        }
+
+        hr {
+            height: 1px;
+            border-width: 0px;
+            color: gray;
+            background-color: #ccc;
+        }
+
+        .mix-item {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .mix-item:last-child {
+            border-bottom: none;
+        }
+
+        .mix-title {
+            margin-bottom: 5px;
+            cursor: pointer;
+            padding: 5px;
+            padding-left: 10px;
+            margin: -5px;
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 20px;
+        }
+
+        .mix-date {
+            flex-shrink: 0;
+        }
+
+        .mix-rest {
+            flex-grow: 1;
+        }
+
+        .mix-item:hover {
+            background: #f0f0f0;
+        }
+
+        .mix-content {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .mix-item.open .mix-content {
+            display: block;
+        }
+
+        .mix-description {
+            font-size: 13px;
+            color: #666666;
+            margin-bottom: 15px;
+            padding-left: 5px;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .instructions {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #ccc;
+        }
+
+        .instructions pre {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Archive of mix-files to stream/download. Click titles to expand details.</h1>
+        <hr>
+        <div id="mixList"></div>
+        <hr>
+    </div>
+
+    <script>
+        const mixes = [
+            {
+                title: "Jul 2025 - Smart Man Radio (1) - Sighing Works",
+                description: "Adult, VGM, The Usual...",
+                audioUrl: "https://archive.org/download/mix-sighing-works/mix%20Sighing%20works.mp3"
+            },
+            {
+                title: "Aug 2024 - Ding Dong Radio (5) - Separation of Money from Fool",
+                description: "A feeling of knowing washes over you.",
+                audioUrl: "https://archive.org/download/ddddddddddr-001/Separation%20of%20Money%20from%20Fool.mp3"
+            },
+            {
+                title: "Dec 2023 - Does it suck to get that joke?",
+                description: "Effort merchant on this one, smh.",
+                audioUrl: "https://archive.org/download/does-it-suck-to-get-that-joke/Does%20it%20suck%20to%20get%20that%20joke.mp3"
+            },
+            {
+                title: "Mar 2023 - Important You - Best Foldables",
+                description: "Moody",
+                audioUrl: "https://archive.org/download/best-foldable/best%20foldable.mp3"
+            },
+            {
+                title: "Dec 2022 - Ding Dong Radio (4) - Important You - Cheese Dome",
+                description: "Dream reference no one knows about or cares about.",
+                audioUrl: "https://archive.org/download/ddddddddddr-001/DDDDDDDDDDR04.mp3"
+            },
+            {
+                title: "Jul 2022 - Important You - Separation of Squeak and Oil",
+                description: "Long bus rides in Denmark.",
+                audioUrl: "https://archive.org/download/bottle_202510/bottle.mp3"
+            },
+            {
+                title: "Jun 2022 - Ding Dong Radio (3) - Only Suffering Pays The Debt Now, Fool!",
+                description: "",
+                audioUrl: "https://archive.org/download/ddddddddddr-001/Only%20Suffering%20Pays%20the%20Debt%20Now%2C%20Fool%21.mp3"
+            },
+            {
+                title: "Mar 2022 - DJ Encourage Me and I'll Never Forget You - Your Laughter Is Very Strange, But It's O.K.",
+                description: "For Cosmic Trattoria.",
+                audioUrl: "https://archive.org/download/your-laughter-is-very-strange-but-it-s-o.-k./Your%20Laughter%20Is%20Very%20Strange%2C%20But%20It_s%20O.K..mp3"
+            },
+            {
+                title: "Jan 2022 - Ding Dong Radio (2) - DJ If I Laugh Ask Me Why I'm Laughing - Basket Star Belly Landing",
+                description: "",
+                audioUrl: "https://archive.org/download/ddddddddddr-001/DDDDDDDDDDR02.mp3"
+            },
+            {
+                title: "Nov 2021 - Important You - Compliance Event",
+                description: "For Orange Photo.",
+                audioUrl: "https://archive.org/download/important-you-compliance-event-dj-mix/Important%20You%20-%20Compliance%20Event%20%28DJ%20Mix%29.mp3"
+            },
+            {
+                title: "May 2021 - Ding Dong Radio (1) - DJ Recover Spool Job - You've asked quite justifiably",
+                description: "Covid vibes",
+                audioUrl: "https://archive.org/download/ddddddddddr-001/DDDDDDDDDDR001.mp3"
+            },
+	{
+                title: "Oct 2020 - DJ Multi Whisper Jog - Is this how you are",
+                description: "",
+                audioUrl: "https://archive.org/download/dj-multi-whisper-jog-is-this-how-you-are/DJ%20Multi%20Whisper%20Jog%20-%20_is%20this%20how%20you%20are__.mp3"
+            },
+            {
+                title: "Feb 2020 - Typing Game",
+                description: "VGM for workstation keyboards in sauna.",
+                audioUrl: "https://archive.org/download/typing-game_20251006/typing%20game.mp3"
+            },
+            {
+                title: "Aug 2019 - My House in DarkBASIC",
+                description: "",
+                audioUrl: "https://archive.org/download/my-house-in-dark-basic/My%20House%20in%20DarkBASIC.mp3"
+            },
+            {
+                title: "Nov 2018 - A Simple Simulation of the Daisyworld Model Using Microsoft Excel",
+                description: "was for a soundcloud series but it's not there anymore",
+                audioUrl: "https://archive.org/download/a-simple-simulation-of-the-daisyworld-model-using-microsoft-excel/a%20simple%20simulation%20of%20the%20daisyworld%20model%20using%20microsoft%20excel.mp3"
+            },
+        ];
+
+        function renderMixes() {
+            const mixList = document.getElementById('mixList');
+            
+            mixes.forEach((mix, index) => {
+                const mixItem = document.createElement('div');
+                mixItem.className = 'mix-item';
+                
+                // Split title into date and rest
+                const parts = mix.title.split(' - ');
+                const date = parts[0];
+                const rest = parts.slice(1).join(' - ');
+                
+                mixItem.innerHTML = `
+                    <div class="mix-title" onclick="toggleMix(${index})">
+                        <span class="mix-date">${date}</span>
+                        <span class="mix-rest">${rest}</span>
+                    </div>
+                    <div class="mix-content">
+                        <div class="mix-description">${mix.description}</div>
+                        <audio controls preload="none">
+                            <source src="${mix.audioUrl}" type="audio/mpeg">
+                            your browser does not support audio.
+                        </audio>
+                    </div>
+                `;
+                mixList.appendChild(mixItem);
+            });
+        }
+
+        function toggleMix(index) {
+            const mixItems = document.querySelectorAll('.mix-item');
+            mixItems[index].classList.toggle('open');
+        }
+
+        renderMixes();
+    </script>
+</body>
+</html>
