@@ -36,6 +36,29 @@
         .link:hover {
             text-decoration: underline;
         }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border: 1px solid #e5e5e5;
+            border-radius: 3px;
+            background: #fff;
+        }
+        
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #e5e5e5;
+            object-fit: cover;
+        }
+        
+        .profile-name {
+            color: #444;
+        }
         
         .tumblr-section {
             margin-bottom: 40px;
@@ -70,6 +93,10 @@
     </style>
 </head>
 <body>    
+     <div class="profile-section">
+        <img src="popcorn-cds.jpg" alt="Sean Lockwood" class="profile-image">
+        <div class="profile-name">Sean Lockwood</div>
+    </div>
     <div class="tumblr-section">
         <div class="tumblr-header">About Me</div>
         <div class="tumblr-content">
