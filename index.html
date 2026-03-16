@@ -121,17 +121,16 @@
 
   <!-- Column 2: Info -->
   <div class="col" id="col-info">
-    Sean Lockwood
-    <p><a href="/portfolio">Work</a></p>
+    <p>Sean Lockwood</p>
+    <p><a href="/cv.pdf">CV</a></p>
   </div>
 
   <!-- Column 3: News -->
   <div class="col" id="col-news">
-    <h3>News</h3>
+    <p>News</p>
     <div id="news-body"></div>
     <p id="news-footer"></p>
-    <hr>
-    <a href="#" id="archive-toggle"><h3>News Archives</h3></a>
+    <a href="#" id="archive-toggle">News archives</a>
     <ul id="archive-list"></ul>
   </div>
 
@@ -193,7 +192,7 @@ fetch('news.json')
     function showPost(index) {
       newsBody.innerHTML = posts[index].content;
       newsFooter.innerHTML =
-        '<em>posted by negotiable @ ' + formatDate(posts[index].published) + '</em>';
+        '<em>posted by thumbnail @ ' + formatDate(posts[index].published) + '</em>';
       current = index;
     }
 
