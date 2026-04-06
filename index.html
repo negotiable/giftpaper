@@ -10,69 +10,69 @@
       margin: 0;
       padding: 0;
     }
-
+ 
     body {
       font-family: inherit;
       padding: 20px;
     }
-
+ 
     a:link, a:visited {
       color: black;
       text-decoration: none;
     }
-
+ 
     a:hover {
       text-decoration: underline;
     }
-
+ 
     /* ── Layout ─────────────────────────────────────── */
-
+ 
     .row {
       display: flex;
       align-items: flex-start;
       gap: 20px;
     }
-
+ 
     .col {
       flex: 1;
       min-width: 0;
     }
-
+ 
     /* ── Story column ────────────────────────────────── */
-
+ 
     #story-img {
       width: 100%;
       height: auto;
       display: block;
     }
-
+ 
     #story-caption {
       font-style: italic;
       margin-top: 4px;
       font-size: 0.85em;
     }
-
+ 
     #story-empty {
       color: #aaa;
     }
-
+ 
     /* ── News column ─────────────────────────────────── */
-
+ 
     #news-body {
       margin-bottom: 8px;
     }
-
+ 
     #news-body img {
       max-width: 100%;
       height: auto;
     }
-
+ 
     #news-footer {
       font-style: italic;
       font-size: 0.85em;
       margin-top: 4px;
     }
-
+ 
     hr {
       border: none;
       border-top: 1px solid black;
@@ -80,24 +80,23 @@
       width: 50%;
       margin-inline-start: 0;
     }
-
-    #archive-toggle {
-      cursor: pointer;
+ 
+    #news-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
     }
-
-    #archive-list {
-      display: none;
-      list-style: none;
-      padding: 0;
-      margin-top: 4px;
+ 
+    #news-nav a {
+      visibility: hidden;
     }
-
-    #archive-list li {
-      margin-bottom: 2px;
+ 
+    #news-nav a.visible {
+      visibility: visible;
     }
-
+ 
     /* ── Mobile ──────────────────────────────────────── */
-
+ 
     @media screen and (max-width: 700px) {
       .row {
         flex-direction: column;
@@ -129,9 +128,11 @@
   <div class="col" id="col-news">
     <p>News</p><br />
     <div id="news-body"></div>
-    <p id="news-footer"></p><br /><br />
-    <a href="#" id="archive-toggle">News archives</a>
-    <ul id="archive-list"></ul>
+    <p id="news-footer"></p><br />
+    <div id="news-nav">
+      <a href="#" id="nav-prev">Previous</a>
+      <a href="#" id="nav-next">Next</a>
+    </div>
   </div>
 
 </div>
@@ -144,7 +145,7 @@ function formatDate(isoString) {
                 'Jul','Aug','Sep','Oct','Nov','Dec'];
   return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
 }
-
+ 
 // Format date+time as "31 Jan 2020, 14:18"
 function formatDateTime(isoString) {
   var d = new Date(isoString);
@@ -155,7 +156,7 @@ function formatDateTime(isoString) {
   return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear()
          + ', ' + h + ':' + m;
 }
-
+ 
 // ── Load story ─────────────────────────────────────────────────────────────
 fetch('stories.json')
   .then(function(r) { return r.json(); })
@@ -165,7 +166,7 @@ fetch('stories.json')
       container.innerHTML = '<span id="story-empty">—</span>';
       return;
     }
-    var latest = stories[0]; // most recent is first (Worker unshifts)
+    var latest = stories[0];
     var dt = formatDateTime(latest.posted);
     container.innerHTML =
       '<img id="story-img" src="' + latest.path + '" alt="">' +
@@ -175,53 +176,52 @@ fetch('stories.json')
     document.getElementById('story-container').innerHTML =
       '<span id="story-empty">—</span>';
   });
-
+ 
 // ── Load news ──────────────────────────────────────────────────────────────
 fetch('news.json')
   .then(function(r) { return r.json(); })
   .then(function(posts) {
     if (!posts || posts.length === 0) return;
-
-    var archiveList = document.getElementById('archive-list');
-    var newsBody    = document.getElementById('news-body');
-    var newsFooter  = document.getElementById('news-footer');
-
-    // Show most recent post by default
+ 
+    var newsBody   = document.getElementById('news-body');
+    var newsFooter = document.getElementById('news-footer');
+    var navPrev    = document.getElementById('nav-prev');
+    var navNext    = document.getElementById('nav-next');
+ 
+    // Start at most recent (last in array)
     var current = posts.length - 1;
-
+ 
     function showPost(index) {
+      current = index;
       newsBody.innerHTML = posts[index].content;
       newsFooter.innerHTML =
         '<em>posted by thumbnail @ ' + formatDate(posts[index].published) + '</em>';
-      current = index;
+ 
+      // Previous = older = index - 1; only show if exists
+      if (current > 0) {
+        navPrev.classList.add('visible');
+      } else {
+        navPrev.classList.remove('visible');
+      }
+ 
+      // Next = newer = index + 1; only show if exists
+      if (current < posts.length - 1) {
+        navNext.classList.add('visible');
+      } else {
+        navNext.classList.remove('visible');
+      }
     }
-
+ 
     showPost(current);
-
-    // Build archive list (newest first)
-    for (var i = posts.length - 1; i >= 0; i--) {
-      (function(idx) {
-        var li = document.createElement('li');
-        var a  = document.createElement('a');
-        a.href = '#';
-        a.textContent = formatDate(posts[idx].published);
-        a.addEventListener('click', function(e) {
-          e.preventDefault();
-          showPost(idx);
-          // Collapse archive after selection
-          archiveList.style.display = 'none';
-        });
-        li.appendChild(a);
-        archiveList.appendChild(li);
-      })(i);
-    }
-
-    // Archive toggle
-    var toggle = document.getElementById('archive-toggle');
-    toggle.addEventListener('click', function(e) {
+ 
+    navPrev.addEventListener('click', function(e) {
       e.preventDefault();
-      archiveList.style.display =
-        archiveList.style.display === 'none' ? 'block' : 'none';
+      if (current > 0) showPost(current - 1);
+    });
+ 
+    navNext.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (current < posts.length - 1) showPost(current + 1);
     });
   });
 </script>
