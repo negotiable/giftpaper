@@ -10,69 +10,60 @@
       margin: 0;
       padding: 0;
     }
- 
+
     body {
       font-family: inherit;
       padding: 20px;
     }
- 
+
     a:link, a:visited {
       color: black;
       text-decoration: none;
     }
- 
+
     a:hover {
       text-decoration: underline;
     }
- 
+
     /* ── Layout ─────────────────────────────────────── */
- 
+
     .row {
       display: flex;
       align-items: flex-start;
       gap: 20px;
     }
- 
+
     .col {
       flex: 1;
       min-width: 0;
     }
- 
+
     /* ── Story column ────────────────────────────────── */
- 
+
     #story-img {
       width: 100%;
       height: auto;
       display: block;
     }
- 
+
     #story-caption {
       font-style: italic;
       margin-top: 4px;
       font-size: 0.85em;
     }
- 
+
     #story-empty {
       color: #aaa;
     }
- 
-    /* ── News column ─────────────────────────────────── */
- 
-    #news-body {
-      margin-bottom: 8px;
-    }
- 
-    #news-body img {
-      max-width: 100%;
-      height: auto;
-    }
- 
-    #news-footer {
+
+    /* ── Shared: footer + nav ────────────────────────── */
+
+    .section-footer {
       font-style: italic;
       font-size: 0.85em;
       margin-top: 4px;
     }
- 
+
     hr {
       border: none;
       border-top: 1px solid black;
@@ -80,23 +71,36 @@
       width: 50%;
       margin-inline-start: 0;
     }
- 
-    #news-nav {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 8px;
+
+    .section-nav {
+      font-size: 0.85em;
+      margin-top: 6px;
     }
- 
-    #news-nav a {
+
+    .section-nav a {
       visibility: hidden;
     }
- 
-    #news-nav a.visible {
+
+    .section-nav a.visible {
       visibility: visible;
     }
- 
+
+    /* ── News body ───────────────────────────────────── */
+
+    #news-body img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ── Text section ────────────────────────────────── */
+
+    #text-body {
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
     /* ── Mobile ──────────────────────────────────────── */
- 
+
     @media screen and (max-width: 700px) {
       .row {
         flex-direction: column;
@@ -124,29 +128,38 @@
     <p><a href="/cv.pdf">CV</a></p>
   </div>
 
-  <!-- Column 3: News -->
+  <!-- Column 3: News + Text -->
   <div class="col" id="col-news">
-    <p>News</p><br />
+
+    <!-- News -->
+    <p>News</p><br>
     <div id="news-body"></div>
-    <p id="news-footer"></p><br />
-    <div id="news-nav">
-      <a href="#" id="nav-prev">Previous</a>
-      <a href="#" id="nav-next">Next</a>
+    <p id="news-footer" class="section-footer"></p><br>
+    <div id="news-nav" class="section-nav">
+      <a href="#" id="news-prev">Previous</a> / <a href="#" id="news-next">Next</a>
     </div>
+
+    <!-- Text -->
+    <div id="text-body"></div>
+    <p id="text-footer" class="section-footer"></p><br>
+    <div id="text-nav" class="section-nav">
+      <a href="#" id="text-prev">Previous</a> / <a href="#" id="text-next">Next</a>
+    </div>
+
   </div>
 
 </div>
 
 <script>
-// ── Format date as "31 Jan 2020" ───────────────────────────────────────────
+// ── Helpers ────────────────────────────────────────────────────────────────
+
 function formatDate(isoString) {
   var d = new Date(isoString);
   var months = ['Jan','Feb','Mar','Apr','May','Jun',
                 'Jul','Aug','Sep','Oct','Nov','Dec'];
   return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
 }
- 
-// Format date+time as "31 Jan 2020, 14:18"
+
 function formatDateTime(isoString) {
   var d = new Date(isoString);
   var months = ['Jan','Feb','Mar','Apr','May','Jun',
@@ -156,8 +169,33 @@ function formatDateTime(isoString) {
   return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear()
          + ', ' + h + ':' + m;
 }
- 
-// ── Load story ─────────────────────────────────────────────────────────────
+
+function initSection(posts, opts) {
+  var current = posts.length - 1;
+
+  function show(index) {
+    current = index;
+    opts.bodyEl.innerHTML   = opts.getContent(posts[index]);
+    opts.footerEl.innerHTML = opts.getFooter(posts[index]);
+    opts.prevEl.classList.toggle('visible', current > 0);
+    opts.nextEl.classList.toggle('visible', current < posts.length - 1);
+  }
+
+  opts.prevEl.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (current > 0) show(current - 1);
+  });
+
+  opts.nextEl.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (current < posts.length - 1) show(current + 1);
+  });
+
+  show(current);
+}
+
+// ── Story ──────────────────────────────────────────────────────────────────
+
 fetch('stories.json')
   .then(function(r) { return r.json(); })
   .then(function(stories) {
@@ -176,53 +214,44 @@ fetch('stories.json')
     document.getElementById('story-container').innerHTML =
       '<span id="story-empty">—</span>';
   });
- 
-// ── Load news ──────────────────────────────────────────────────────────────
+
+// ── News ───────────────────────────────────────────────────────────────────
+
 fetch('news.json')
   .then(function(r) { return r.json(); })
   .then(function(posts) {
     if (!posts || posts.length === 0) return;
- 
-    var newsBody   = document.getElementById('news-body');
-    var newsFooter = document.getElementById('news-footer');
-    var navPrev    = document.getElementById('nav-prev');
-    var navNext    = document.getElementById('nav-next');
- 
-    // Start at most recent (last in array)
-    var current = posts.length - 1;
- 
-    function showPost(index) {
-      current = index;
-      newsBody.innerHTML = posts[index].content;
-      newsFooter.innerHTML =
-        '<em>posted by thumbnail @ ' + formatDate(posts[index].published) + '</em>';
- 
-      // Previous = older = index - 1; only show if exists
-      if (current > 0) {
-        navPrev.classList.add('visible');
-      } else {
-        navPrev.classList.remove('visible');
+    initSection(posts, {
+      bodyEl:     document.getElementById('news-body'),
+      footerEl:   document.getElementById('news-footer'),
+      prevEl:     document.getElementById('news-prev'),
+      nextEl:     document.getElementById('news-next'),
+      getContent: function(p) { return p.content; },
+      getFooter:  function(p) {
+        return '<em>posted by thumbnail @ ' + formatDate(p.published) + '</em>';
       }
- 
-      // Next = newer = index + 1; only show if exists
-      if (current < posts.length - 1) {
-        navNext.classList.add('visible');
-      } else {
-        navNext.classList.remove('visible');
+    });
+  });
+
+// ── Text ───────────────────────────────────────────────────────────────────
+
+fetch('text.json')
+  .then(function(r) { return r.json(); })
+  .then(function(posts) {
+    if (!posts || posts.length === 0) return;
+    initSection(posts, {
+      bodyEl:     document.getElementById('text-body'),
+      footerEl:   document.getElementById('text-footer'),
+      prevEl:     document.getElementById('text-prev'),
+      nextEl:     document.getElementById('text-next'),
+      getContent: function(p) { return p.content; },
+      getFooter:  function(p) {
+        return '<em>posted by ' + p.signature + ' @ ' + formatDate(p.posted) + '</em>';
       }
-    }
- 
-    showPost(current);
- 
-    navPrev.addEventListener('click', function(e) {
-      e.preventDefault();
-      if (current > 0) showPost(current - 1);
     });
- 
-    navNext.addEventListener('click', function(e) {
-      e.preventDefault();
-      if (current < posts.length - 1) showPost(current + 1);
-    });
+  })
+  .catch(function() {
+    // text.json may not exist yet — fail silently
   });
 </script>
 
