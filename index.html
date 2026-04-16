@@ -113,7 +113,7 @@
   <!-- Column 2: Info -->
   <div class="col" id="col-info">
     <p>Sean Lockwood</p>
-    <p><a href="/cv.pdf">CV</a></p>
+    <!--<p><a href="/cv.pdf">CV</a></p>-->
   </div>
 
   <!-- Column 3: News + Text -->
@@ -236,7 +236,7 @@ fetch('text.json')
       nextEl:     document.getElementById('text-next'),
       getContent: function(p) { return p.content; },
       getFooter:  function(p) {
-        return '<em>posted by ' + p.signature + ' @ ' + formatDate(p.posted) + '</em>';
+        return '<em>posted by ' + p.signature + ' @ ' + formatDateTime(p.posted) + '</em>';
       }
     });
   })
