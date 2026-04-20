@@ -13,7 +13,7 @@
 
     body {
       font-family: inherit;
-      padding: 20px;
+      padding: 20px 25% 40px;
     }
 
     a:link, a:visited {
@@ -25,25 +25,34 @@
       text-decoration: underline;
     }
 
-    /* ── Layout ─────────────────────────────────────── */
+    /* ── 2x2 Grid ───────────────────────────────────── */
 
-    .row {
-      display: flex;
-      align-items: flex-start;
-      gap: 20px;
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "story  news"
+        "info   text";
+      gap: 40px;
     }
 
-    .col {
-      flex: 1;
-      min-width: 0;
-    }
+    #cell-story { grid-area: story; }
+    #cell-news  { grid-area: news;  }
+    #cell-info  { grid-area: info;  }
+    #cell-text  { grid-area: text;  }
 
-    /* ── Story column ────────────────────────────────── */
+    /* ── Story ───────────────────────────────────────── */
+
+    #story-container {
+      max-height: 50vh;
+    }
 
     #story-img {
-      width: 100%;
-      height: auto;
       display: block;
+      max-width: 100%;
+      max-height: 50vh;
+      width: auto;
+      height: auto;
     }
 
     #story-caption {
@@ -64,14 +73,6 @@
       margin-top: 4px;
     }
 
-    hr {
-      border: none;
-      border-top: 1px solid black;
-      margin: 12px 0;
-      width: 50%;
-      margin-inline-start: 0;
-    }
-
     .section-nav a {
       visibility: hidden;
     }
@@ -90,51 +91,65 @@
     /* ── Mobile ──────────────────────────────────────── */
 
     @media screen and (max-width: 700px) {
-      .row {
-        flex-direction: column;
+      body {
+        padding: 20px;
       }
-      hr {
+      .grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: unset;
+        grid-template-areas:
+          "story"
+          "info"
+          "news"
+          "text";
+        gap: 24px;
+        height: auto;
+      }
+      #story-container {
+        max-height: none;
+      }
+      #story-img {
         width: 100%;
+        max-height: none;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="row">
+<div class="grid">
 
-  <!-- Column 1: Story -->
-  <div class="col" id="col-story">
+  <!-- Top left: Story -->
+  <div id="cell-story">
     <div id="story-container">
       <span id="story-empty">—</span>
     </div>
   </div>
 
-  <!-- Column 2: Info -->
-  <div class="col" id="col-info">
-    <p>Sean Lockwood</p>
-    <!--<p><a href="/cv.pdf">CV</a></p>-->
-  </div>
-
-  <!-- Column 3: News + Text -->
-  <div class="col" id="col-news">
-
-    <!-- News -->
+  <!-- Top right: News -->
+  <div id="cell-news">
     <p>News</p><br>
     <div id="news-body"></div>
     <p id="news-footer" class="section-footer"></p><br>
     <div id="news-nav" class="section-nav">
       <p><a href="#" id="news-prev">Previous</a> / <a href="#" id="news-next">Next</a></p>
     </div>
-    <!-- Text -->
-    <br><br>
+  </div>
+
+  <!-- Bottom left: Info -->
+  <div id="cell-info">
+    <p>Sean Lockwood</p>
+    <!--<p><a href="/cv.pdf">CV</a></p>-->
+  </div>
+
+  <!-- Bottom right: Saved Messages -->
+  <div id="cell-text">
     <p>Saved Messages</p><br>
     <div id="text-body"></div>
     <p id="text-footer" class="section-footer"></p><br>
     <div id="text-nav" class="section-nav">
       <p><a href="#" id="text-prev">Previous</a> / <a href="#" id="text-next">Next</a></p>
     </div>
-
   </div>
 
 </div>
