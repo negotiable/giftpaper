@@ -10,23 +10,23 @@
       margin: 0;
       padding: 0;
     }
-
+ 
     body {
       font-family: inherit;
       padding: 20px 25% 40px;
     }
-
+ 
     a:link, a:visited {
       color: black;
       text-decoration: none;
     }
-
+ 
     a:hover {
       text-decoration: underline;
     }
-
+ 
     /* ── 2x2 Grid ───────────────────────────────────── */
-
+ 
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -35,18 +35,18 @@
         "info   text";
       gap: 40px;
     }
-
+ 
     #cell-story { grid-area: story; height: 50vh; }
-    #cell-news  { grid-area: news;  height: 50vh; overflow: hidden; }
+    #cell-news  { grid-area: news;  height: 50vh; overflow: hidden; display: flex; flex-direction: column; }
     #cell-info  { grid-area: info;  }
     #cell-text  { grid-area: text;  }
-
+ 
     /* ── Story ───────────────────────────────────────── */
-
+ 
     #story-container {
       max-height: 40vh;
     }
-
+ 
     #story-img {
       display: block;
       max-width: 100%;
@@ -54,39 +54,44 @@
       width: auto;
       height: auto;
     }
-
+ 
     #story-caption {
       font-style: italic;
       margin-top: 4px;
       font-size: 0.85em;
     }
-
+ 
     #story-empty {
       color: #aaa;
     }
-
+ 
     /* ── Shared: footer + nav ────────────────────────── */
-
+ 
     .section-footer {
       font-style: italic;
       font-size: 0.85em;
       margin-top: 4px;
     }
-
+ 
+    #news-nav {
+      margin-top: auto;
+      text-align: right;
+    }
+ 
     .section-nav {
       text-align: right;
     }
-
+ 
     .section-nav a {
       visibility: hidden;
     }
-
+ 
     .section-nav a.visible {
       visibility: visible;
     }
-
+ 
     /* ── News body ───────────────────────────────────── */
-
+ 
     #news-body img {
       display: block;
       width: 100%;
@@ -95,10 +100,10 @@
       object-position: left top;
       cursor: pointer;
     }
-
+ 
     /* ── Mobile ──────────────────────────────────────── */
-
-     @media screen and (max-width: 700px) {
+ 
+    @media screen and (max-width: 900px) {
       body {
         padding: 20px;
       }
@@ -119,6 +124,10 @@
       #cell-news {
         height: auto;
         overflow: visible;
+        display: block;
+      }
+      #news-nav {
+        margin-top: 6px;
       }
       #story-container {
         max-height: none;
