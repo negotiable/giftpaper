@@ -4,33 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sean Lockwood</title>
-  <meta name="description" content="Sean Lockwood is a visual artist">
-  <meta property="og:title" content="Sean Lockwood Art">
-  <meta property="og:description" content="...same or similar...">
-  <meta property="og:url" content="https://giftpaper.pictures">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
- 
+
     body {
       font-family: inherit;
       padding: 20px 25% 40px;
     }
- 
+
     a:link, a:visited {
       color: black;
       text-decoration: none;
     }
- 
+
     a:hover {
       text-decoration: underline;
     }
- 
+
     /* ── 2x2 Grid ───────────────────────────────────── */
- 
+
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -39,64 +35,70 @@
         "info   text";
       gap: 40px;
     }
- 
-    #cell-story { grid-area: story; }
-    #cell-news  { grid-area: news;  }
+
+    #cell-story { grid-area: story; height: 50vh; }
+    #cell-news  { grid-area: news;  height: 50vh; overflow: hidden; }
     #cell-info  { grid-area: info;  }
     #cell-text  { grid-area: text;  }
- 
+
     /* ── Story ───────────────────────────────────────── */
- 
+
     #story-container {
-      max-height: 50vh;
+      max-height: 40vh;
     }
- 
+
     #story-img {
       display: block;
       max-width: 100%;
-      max-height: 50vh;
+      max-height: 40vh;
       width: auto;
       height: auto;
     }
- 
+
     #story-caption {
       font-style: italic;
       margin-top: 4px;
       font-size: 0.85em;
     }
- 
+
     #story-empty {
       color: #aaa;
     }
- 
+
     /* ── Shared: footer + nav ────────────────────────── */
- 
+
     .section-footer {
       font-style: italic;
       font-size: 0.85em;
       margin-top: 4px;
     }
- 
+
+    .section-nav {
+      text-align: right;
+    }
+
     .section-nav a {
       visibility: hidden;
     }
- 
+
     .section-nav a.visible {
       visibility: visible;
     }
- 
+
     /* ── News body ───────────────────────────────────── */
- 
+
     #news-body img {
-      max-width: 100%;
-      height: auto;
       display: block;
+      width: 100%;
+      max-height: 40vh;
+      object-fit: contain;
+      object-position: left top;
       cursor: pointer;
     }
- 
+
     /* ── Mobile ──────────────────────────────────────── */
- 
-    @media screen and (max-width: 700px) {
+
+     @media screen and (max-width: 700px) {
       body {
         padding: 20px;
       }
@@ -111,6 +113,13 @@
         gap: 24px;
         height: auto;
       }
+      #cell-story {
+        height: auto;
+      }
+      #cell-news {
+        height: auto;
+        overflow: visible;
+      }
       #story-container {
         max-height: none;
       }
@@ -118,21 +127,24 @@
         width: 100%;
         max-height: none;
       }
+      #news-body img {
+        max-height: none;
+      }
     }
   </style>
 </head>
 <body>
- 
+
 <div class="grid">
- 
+
   <!-- Top left: Story -->
   <div id="cell-story">
-    <p>Sean Lockwood</p><br>
+    <br><br>
     <div id="story-container">
       <span id="story-empty">—</span>
     </div>
   </div>
- 
+
   <!-- Top right: News -->
   <div id="cell-news">
     <p>News</p><br>
@@ -142,35 +154,38 @@
       <p><a href="#" id="news-prev">Previous</a> / <a href="#" id="news-next">Next</a></p>
     </div>
   </div>
- 
+
   <!-- Bottom left: Info -->
   <div id="cell-info">
-    
+    <p>Sean Lockwood</p><br>
+    <p><a href="https://motionatfrontdoornotification.blogspot.com">https://motionatfrontdoornotification.blogspot.com</a></p>
+    <p><a href="https://options.device.gmbh">https://options.device.gmbh</a></p>
+    <p><a href="https://paid.exchange">https://paid.exchange</a></p>
     <!--<p><a href="/cv.pdf">CV</a></p>-->
   </div>
- 
-  <!-- Bottom right: Saved Messages -->
+
+  <!-- Bottom right: Saved messages-->
   <div id="cell-text">
-    <p>Saved Messages</p><br>
+    <p>Saved messages</p><br>
     <div id="text-body"></div>
     <p id="text-footer" class="section-footer"></p><br>
     <div id="text-nav" class="section-nav">
       <p><a href="#" id="text-prev">Previous</a> / <a href="#" id="text-next">Next</a></p>
     </div>
   </div>
- 
+
 </div>
- 
+
 <script>
 // ── Helpers ────────────────────────────────────────────────────────────────
- 
+
 function formatDate(isoString) {
   var d = new Date(isoString);
   var months = ['Jan','Feb','Mar','Apr','May','Jun',
                 'Jul','Aug','Sep','Oct','Nov','Dec'];
   return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
 }
- 
+
 function formatDateTime(isoString) {
   var d = new Date(isoString);
   var months = ['Jan','Feb','Mar','Apr','May','Jun',
@@ -180,10 +195,10 @@ function formatDateTime(isoString) {
   return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear()
          + ', ' + h + ':' + m;
 }
- 
+
 function initSection(posts, opts) {
   var current = posts.length - 1;
- 
+
   function show(index) {
     current = index;
     opts.bodyEl.innerHTML   = opts.getContent(posts[index]);
@@ -191,22 +206,22 @@ function initSection(posts, opts) {
     opts.prevEl.classList.toggle('visible', current > 0);
     opts.nextEl.classList.toggle('visible', current < posts.length - 1);
   }
- 
+
   opts.prevEl.addEventListener('click', function(e) {
     e.preventDefault();
     if (current > 0) show(current - 1);
   });
- 
+
   opts.nextEl.addEventListener('click', function(e) {
     e.preventDefault();
     if (current < posts.length - 1) show(current + 1);
   });
- 
+
   show(current);
 }
- 
+
 // ── Story ──────────────────────────────────────────────────────────────────
- 
+
 fetch('stories.json')
   .then(function(r) { return r.json(); })
   .then(function(stories) {
@@ -225,9 +240,9 @@ fetch('stories.json')
     document.getElementById('story-container').innerHTML =
       '<span id="story-empty">—</span>';
   });
- 
+
 // ── News ───────────────────────────────────────────────────────────────────
- 
+
 fetch('news.json')
   .then(function(r) { return r.json(); })
   .then(function(posts) {
@@ -237,12 +252,15 @@ fetch('news.json')
       footerEl:   document.getElementById('news-footer'),
       prevEl:     document.getElementById('news-prev'),
       nextEl:     document.getElementById('news-next'),
-      getContent: function(p) { return p.content; },
+      getContent: function(p) {
+        // ⟶ (U+27F6) has poor font coverage; replace with standard →
+        return p.content.replace(/⟶/g, '→');
+      },
       getFooter:  function(p) {
         return '<em>posted by thumbnail @ ' + formatDate(p.published) + '</em>';
       }
     });
- 
+
     // Make any unwrapped images in news clickable to open full size
     document.getElementById('news-body').addEventListener('click', function(e) {
       if (e.target.tagName === 'IMG' && e.target.parentElement.tagName !== 'A') {
@@ -250,9 +268,9 @@ fetch('news.json')
       }
     });
   });
- 
+
 // ── Text ───────────────────────────────────────────────────────────────────
- 
+
 fetch('text.json')
   .then(function(r) { return r.json(); })
   .then(function(posts) {
@@ -272,6 +290,6 @@ fetch('text.json')
     // text.json may not exist yet — fail silently
   });
 </script>
- 
+
 </body>
 </html>
