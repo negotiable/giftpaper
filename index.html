@@ -10,180 +10,110 @@
       margin: 0;
       padding: 0;
     }
- 
+
     body {
       font-family: inherit;
-      padding: 20px 25% 40px;
     }
- 
+
+    /* ── Centered single column ──────────────────────── */
+
+    .column {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    section:last-child {
+      margin-bottom: 0;
+    }
+
     a:link, a:visited {
       color: black;
       text-decoration: none;
     }
- 
+
     a:hover {
       text-decoration: underline;
     }
- 
-    /* ── 2x2 Grid ───────────────────────────────────── */
- 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-areas:
-        "story  news"
-        "info   text";
-      gap: 40px;
-    }
- 
-    #cell-story { grid-area: story; height: 50vh; }
-    #cell-news  { grid-area: news;  height: 50vh; overflow: hidden; display: flex; flex-direction: column; }
-    #cell-info  { grid-area: info;  }
-    #cell-text  { grid-area: text;  }
- 
+
     /* ── Story ───────────────────────────────────────── */
- 
-    #story-container {
-      max-height: 40vh;
-    }
- 
+
     #story-img {
       display: block;
       max-width: 100%;
-      max-height: 40vh;
-      width: auto;
       height: auto;
     }
- 
+
     #story-caption {
       font-style: italic;
       margin-top: 4px;
       font-size: 0.85em;
     }
- 
+
     #story-empty {
       color: #aaa;
     }
- 
+
     /* ── Shared: footer + nav ────────────────────────── */
- 
+
     .section-footer {
       font-style: italic;
       font-size: 0.85em;
       margin-top: 4px;
     }
- 
-    #news-nav {
-      margin-top: auto;
-      text-align: right;
-    }
- 
+
     .section-nav {
       text-align: right;
     }
- 
+
     .section-nav a {
       visibility: hidden;
     }
- 
+
     .section-nav a.visible {
       visibility: visible;
-    }
- 
-    /* ── News body ───────────────────────────────────── */
- 
-    #news-body img {
-      display: block;
-      width: 100%;
-      max-height: 40vh;
-      object-fit: contain;
-      object-position: left top;
-      cursor: pointer;
-    }
- 
-    /* ── Mobile ──────────────────────────────────────── */
- 
-    @media screen and (max-width: 900px) {
-      body {
-        padding: 20px;
-      }
-      .grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: unset;
-        grid-template-areas:
-          "story"
-          "info"
-          "news"
-          "text";
-        gap: 24px;
-        height: auto;
-      }
-      #cell-story {
-        height: auto;
-      }
-      #cell-news {
-        height: auto;
-        overflow: visible;
-        display: block;
-      }
-      #news-nav {
-        margin-top: 6px;
-      }
-      #story-container {
-        max-height: none;
-      }
-      #story-img {
-        width: 100%;
-        max-height: none;
-      }
-      #news-body img {
-        max-height: none;
-      }
     }
   </style>
 </head>
 <body>
 
-<div class="grid">
+<div class="column">
 
-  <!-- Top left: Story -->
-  <div id="cell-story">
-    <br><br>
+  <!-- Story -->
+  <section id="cell-story">
     <div id="story-container">
       <span id="story-empty">—</span>
     </div>
-  </div>
+  </section>
 
-  <!-- Top right: News -->
-  <div id="cell-news">
+  <!-- Name -->
+  <section id="cell-info">
+    <p>Sean Lockwood</p>
+  </section>
+
+  <!-- News -->
+  <section id="cell-news">
     <p>News</p><br>
     <div id="news-body"></div>
     <p id="news-footer" class="section-footer"></p><br>
     <div id="news-nav" class="section-nav">
       <p><a href="#" id="news-prev">Previous</a> / <a href="#" id="news-next">Next</a></p>
     </div>
-  </div>
+  </section>
 
-  <!-- Bottom left: Info -->
-  <div id="cell-info">
-    <p>Sean Lockwood</p><br>
-    <p>with <a href="https://nickstro.hotglue.me">Nicholas Strobelt:</p>
-    <p><a href="https://options.device.gmbh">https://options.device.gmbh</a></p>
-    <p><a href="https://paid.exchange">https://paid.exchange</a></p><br>
-    <p>See also:</p>
-    <p><a href="https://motionatfrontdoornotification.blogspot.com">https://motionatfrontdoornotification.blogspot.com</a></p>
-    <!--<p><a href="/cv.pdf">CV</a></p>-->
-  </div>
-
-  <!-- Bottom right: Saved messages-->
-  <div id="cell-text">
+  <!-- Saved messages -->
+  <section id="cell-text">
     <p>Saved messages</p><br>
     <div id="text-body"></div>
     <p id="text-footer" class="section-footer"></p><br>
     <div id="text-nav" class="section-nav">
       <p><a href="#" id="text-prev">Previous</a> / <a href="#" id="text-next">Next</a></p>
     </div>
-  </div>
+  </section>
 
 </div>
 
@@ -263,19 +193,9 @@ fetch('news.json')
       footerEl:   document.getElementById('news-footer'),
       prevEl:     document.getElementById('news-prev'),
       nextEl:     document.getElementById('news-next'),
-      getContent: function(p) {
-        // ⟶ (U+27F6) has poor font coverage; replace with standard →
-        return p.content.replace(/⟶/g, '→');
-      },
+      getContent: function(p) { return p.content; },
       getFooter:  function(p) {
         return '<em>posted by thumbnail @ ' + formatDate(p.published) + '</em>';
-      }
-    });
-
-    // Make any unwrapped images in news clickable to open full size
-    document.getElementById('news-body').addEventListener('click', function(e) {
-      if (e.target.tagName === 'IMG' && e.target.parentElement.tagName !== 'A') {
-        window.open(e.target.src, '_blank');
       }
     });
   });
